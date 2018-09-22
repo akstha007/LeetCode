@@ -122,11 +122,91 @@ public:
                     }
                 }
             }
-
-
         }
         
         return result;
+    }
+
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> result;
+        vector<int> row;
+        queue<TreeNode*> q;
+        
+        if(root==NULL)
+            return result;
+        
+        q.push(root);
+        int count = 1;
+        while(!q.empty()){
+            root = q.front();
+            row.push_back(root->val);
+            q.pop();
+
+            if(root->left!=NULL)
+                q.push(root->left);
+
+            if(root->right!=NULL)
+                q.push(root->right);
+
+            count--;
+            if(count==0){
+                count = q.size();
+                result.push_back(row);
+                row.clear();
+            }
+        }  
+
+        return result;   
+    }
+
+    int maxDepth(TreeNode* root) {
+        if(!root)
+            return 0;
+        
+        int left_depth = maxDepth(root->left);
+        int right_depth = maxDepth(root->right);
+        
+        return max(left_depth, right_depth) + 1;
+            
+    }
+
+    bool isSymmetric(TreeNode* root) {
+        if(!root)
+            return true;
+        return isSymmetric(root->left, root->right);
+    }
+    
+    bool isSymmetric(TreeNode* leftRoot, TreeNode* rightRoot){
+        if(!leftRoot and !rightRoot)
+            return true;
+        
+        if(leftRoot && rightRoot && (leftRoot->val == rightRoot->val))
+            return (isSymmetric(leftRoot->left, rightRoot->right) && isSymmetric(leftRoot->right, rightRoot->left));
+        
+        return false;
+    }
+
+    bool hasPathSum(TreeNode* root, int sum) {
+        if(!root)
+            return false;
+
+        sum = sum - root->val;
+        bool result = false;
+
+        if(sum==0 && !root->left && !root->right)
+            return true;
+        
+        if(root->left)
+            result = result || hasPathSum(root->left, sum);
+
+        if(root->right)
+            result = result || hasPathSum(root->right, sum);
+        
+        return result;
+    }
+
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        
     }
 };
 
