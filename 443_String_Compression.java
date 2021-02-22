@@ -1,3 +1,8 @@
+/*
+443. String Compression
+https://leetcode.com/problems/string-compression/
+By: Ashok Shrestha
+*/
 class Solution {
     public int compress(char[] chars) {
         int n = chars.length;        
